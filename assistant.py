@@ -45,6 +45,10 @@ class Assistant:
             'какая погода', 'погода', 'погода на улице', 'какая погода на улице',
         ]
 
+        self.searchCommands = (
+            "найти", "найди", "кто такой", "что такое"
+        )
+
         self.num_task = 0
         self.j = 0
         self.ans = ''
@@ -72,6 +76,10 @@ class Assistant:
 
         if self.text.startswith(('открой', 'запусти', 'зайди', 'зайди на')):
             self.opener(self.text)
+
+        if self.text.startswith(self.searchCommands):
+            print(self.text)
+            self.finder(self.text)
 
         for tasks in self.cmds:
             for task in tasks:
@@ -106,6 +114,13 @@ class Assistant:
                             self.talk('Открываю ' + double_task[i])
                             j += 1
                             break
+
+    def finder(self, query):
+        for command in self.searchCommands:
+            query = query.replace(command, "")
+        query.strip()
+
+        webbrowser.open(f"https://google.com/search?q={query}")
 
     def cfile(self):
         try:
